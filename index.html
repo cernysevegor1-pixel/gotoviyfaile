@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyEng — Site Presentation</title>
+  <style>
+    :root{
+      --bg:#040712;
+      --panel:#0a1020;
+      --panel2:#0d1428;
+      --text:#eef4ff;
+      --muted:rgba(238,244,255,.68);
+      --line:rgba(255,255,255,.10);
+      --cyan:#59e7ff;
+      --cyan2:#9feeff;
+      --green:#65ffba;
+      --violet:#b78cff;
+      --rose:#ff7d9d;
+      --shadow:0 20px 80px rgba(0,0,0,.42);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(89,231,255,.15), transparent 24%),
+        radial-gradient(circle at 90% 20%, rgba(183,140,255,.12), transparent 28%),
+        radial-gradient(circle at 35% 85%, rgba(101,255,186,.10), transparent 26%),
+        linear-gradient(180deg,#040712 0%, #05091a 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    .grain::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.07;
+      background-image: radial-gradient(rgba(255,255,255,.7) .6px, transparent .6px);
+      background-size:18px 18px;
+      mix-blend-mode:soft-light;
+    }
+    .orb{
+      position:fixed;
+      border-radius:50%;
+      filter:blur(70px);
+      opacity:.25;
+      pointer-events:none;
+      z-index:0;
+    }
+    .orb.c1{width:260px;height:260px;left:-50px;top:90px;background:radial-gradient(circle, rgba(89,231,255,.9), transparent 68%)}
+    .orb.c2{width:360px;height:360px;right:-90px;top:260px;background:radial-gradient(circle, rgba(183,140,255,.9), transparent 68%)}
+    .orb.c3{width:300px;height:300px;left:35%;bottom:-80px;background:radial-gradient(circle, rgba(101,255,186,.8), transparent 68%)}
+    .wrap{position:relative;z-index:1}
+    .container{max-width:1200px;margin:0 auto;padding:0 22px}
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(18px);
+      background:rgba(4,7,18,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      min-height:74px;gap:18px;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:46px;height:46px;border-radius:16px;padding:3px;
+      background:linear-gradient(135deg, rgba(89,231,255,.5), rgba(101,255,186,.22));
+      box-shadow:0 0 40px rgba(89,231,255,.14);
+      border:1px solid rgba(255,255,255,.08);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .logo img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block}
+    .brand-kicker{font-size:11px;letter-spacing:.28em;color:rgba(255,255,255,.48);text-transform:uppercase}
+    .brand-title{font-size:14px;font-weight:900;letter-spacing:.22em}
+    .nav-links{display:flex;flex-wrap:wrap;gap:10px}
+    .chip,.btn{
+      text-decoration:none;color:var(--text);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      border-radius:999px;
+      padding:11px 16px;
+      font-size:14px;
+      transition:.25s ease;
+      display:inline-flex;align-items:center;gap:10px;
+      cursor:pointer;
+    }
+    .chip:hover,.btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.08);border-color:rgba(89,231,255,.25)}
+    .btn.primary{
+      color:#04111a;
+      font-weight:900;
+      border:none;
+      background:linear-gradient(90deg, var(--cyan), var(--green));
+      box-shadow:0 14px 40px rgba(89,231,255,.18);
+    }
+    .hero{
+      min-height:calc(100vh - 74px);
+      display:grid;align-items:center;
+      padding:42px 0 70px;
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:9px 14px;border-radius:999px;
+      border:1px solid rgba(89,231,255,.18);
+      background:rgba(89,231,255,.08);
+      color:var(--cyan2);
+      font-size:11px;text-transform:uppercase;letter-spacing:.24em;font-weight:700
+    }
+    h1{
+      margin:20px 0 0;
+      font-size:76px;line-height:.95;letter-spacing:-.05em;font-weight:950;
+    }
+    .grad-text{
+      display:block;
+      background:linear-gradient(90deg, var(--cyan2), #fff 40%, #b9ffd7);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .lead{
+      margin:24px 0 0;max-width:680px;
+      font-size:20px;line-height:1.8;color:var(--muted)
+    }
+    .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(16px);
+    }
+    .stat-card{padding:22px}
+    .stat-big{font-size:34px;font-weight:950}
+    .stat-small{margin-top:6px;font-size:14px;color:rgba(255,255,255,.55)}
+    .showcase{
+      padding:1px;border-radius:36px;
+      background:linear-gradient(135deg, rgba(89,231,255,.25), rgba(183,140,255,.14), rgba(101,255,186,.18));
+      box-shadow:0 0 120px rgba(89,231,255,.08);
+    }
+    .showcase-inner{padding:18px;border-radius:36px;background:rgba(8,13,28,.9);border:1px solid rgba(255,255,255,.06)}
+    .mini-stack{display:grid;gap:12px}
+    .mini-alert,.mini-good,.mini-grid div{
+      border-radius:24px;border:1px solid var(--line);padding:18px;
+      background:rgba(255,255,255,.04)
+    }
+    .mini-alert{background:rgba(255,125,157,.10);border-color:rgba(255,125,157,.20)}
+    .mini-good{background:rgba(89,231,255,.10);border-color:rgba(89,231,255,.20)}
+    .mini-label{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.44)}
+    .mini-big{margin-top:9px;font-size:29px;line-height:1.15;font-weight:900}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .mini-grid div{text-align:center}
+    .mini-grid strong{display:block;margin-top:8px}
+    section.section{padding:90px 0}
+    .section h2{font-size:54px;line-height:1.05;margin:18px 0 0;letter-spacing:-.04em}
+    .section .section-lead{margin-top:14px;max-width:780px;font-size:18px;line-height:1.8;color:var(--muted)}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .grid-2{display:grid;grid-template-columns:1.08fr .92fr;gap:20px}
+    .content-card{padding:24px}
+    .content-card h3{margin:16px 0 0;font-size:24px}
+    .content-card p{margin:12px 0 0;font-size:15px;line-height:1.8;color:rgba(255,255,255,.67)}
+    .subgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .mini-card{padding:18px;border-radius:22px;border:1px solid var(--line);background:#0a1325}
+    .mini-card .title{font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:var(--cyan2);font-weight:800}
+    .mini-card p{margin:10px 0 0;font-size:15px;line-height:1.8;color:rgba(255,255,255,.7)}
+    .pain-list{display:grid;gap:14px}
+    .pain-item{
+      display:flex;gap:12px;align-items:flex-start;padding:18px 20px;border-radius:22px;
+      border:1px solid rgba(255,125,157,.18);background:rgba(255,125,157,.07)
+    }
+    .pain-icon{width:20px;height:20px;border-radius:50%;flex:0 0 auto;background:linear-gradient(180deg, #ff9db4, #ff698e);margin-top:3px;box-shadow:0 0 20px rgba(255,125,157,.28)}
+    .reels-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:20px}
+    .reel-list{display:grid;gap:12px}
+    .reel-btn{
+      width:100%;text-align:left;padding:22px;border-radius:26px;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);color:var(--text);cursor:pointer;transition:.25s ease
+    }
+    .reel-btn:hover{background:rgba(255,255,255,.08)}
+    .reel-btn.active{
+      border-color:rgba(89,231,255,.32);
+      background:rgba(89,231,255,.10);
+      box-shadow:0 0 60px rgba(89,231,255,.09);
+    }
+    .reel-name{font-size:18px;font-weight:900}
+    .reel-short{margin-top:8px;color:rgba(255,255,255,.56);font-size:14px}
+    .reel-stat{
+      display:inline-block;margin-top:14px;padding:7px 11px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(255,255,255,.04);
+      color:rgba(255,255,255,.56);font-size:11px;text-transform:uppercase;letter-spacing:.18em
+    }
+    .video-shell{
+      padding:1px;border-radius:32px;
+      background:linear-gradient(135deg, rgba(89,231,255,.22), rgba(255,125,157,.16), rgba(183,140,255,.18));
+    }
+    .video-inner{padding:18px;border-radius:32px;background:rgba(7,16,31,.92);border:1px solid rgba(255,255,255,.06)}
+    .video-top{display:flex;justify-content:space-between;gap:16px;align-items:center}
+    .video-top h3{margin:8px 0 0;font-size:30px;line-height:1.05}
+    .pill{
+      display:inline-block;padding:7px 11px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.5)
+    }
+    .video-wrap{margin-top:16px;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#000}
+    video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+    .placeholder{
+      aspect-ratio:16/9;display:grid;place-items:center;padding:28px;background:rgba(255,255,255,.03);
+      text-align:center;color:rgba(255,255,255,.58)
+    }
+    .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+    .info-box{padding:16px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+    .info-box strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.42)}
+    .info-box span{display:block;margin-top:10px;font-size:14px;line-height:1.7;color:rgba(255,255,255,.77)}
+    .insight-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .icon-box{
+      width:50px;height:50px;border-radius:18px;display:grid;place-items:center;
+      background:rgba(255,255,255,.06);color:var(--cyan2);font-size:22px
+    }
+    .table-card{overflow:hidden}
+    .table-header,.table-row{
+      display:grid;grid-template-columns:1.05fr 1fr 1fr 1.15fr .95fr
+    }
+    .table-header{
+      font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.46);
+      background:rgba(255,255,255,.03);border-bottom:1px solid var(--line)
+    }
+    .table-header div,.table-row div{padding:18px 16px}
+    .table-row{border-bottom:1px solid var(--line)}
+    .table-row:last-child{border-bottom:none}
+    .table-row div{font-size:14px;line-height:1.7;color:rgba(255,255,255,.68)}
+    .table-row div:first-child{font-weight:900;color:#fff}
+    .table-row div:last-child{color:var(--cyan2)}
+    .metric-list{display:grid;gap:14px}
+    .metric-card{padding:20px}
+    .metric-top{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:rgba(255,255,255,.8)}
+    .bar{height:12px;border-radius:999px;background:rgba(255,255,255,.10);margin-top:12px;overflow:hidden}
+    .bar > div{height:100%;width:0;border-radius:999px;transition:1.2s ease}
+    .accent-box{padding:22px;border-radius:24px;border:1px solid rgba(101,255,186,.16);background:rgba(101,255,186,.07)}
+    .accent-box p{margin:10px 0 0;font-size:15px;line-height:1.8;color:rgba(255,255,255,.76)}
+    .faq-list{display:grid;gap:14px}
+    details.faq{
+      border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:26px;padding:20px 22px
+    }
+    details.faq summary{
+      list-style:none;cursor:pointer;font-size:20px;font-weight:900
+    }
+    details.faq summary::-webkit-details-marker{display:none}
+    details.faq p{margin:14px 0 0;font-size:15px;line-height:1.8;color:rgba(255,255,255,.7)}
+    .final{
+      padding:1px;border-radius:34px;background:linear-gradient(90deg, rgba(89,231,255,.22), rgba(255,255,255,.08), rgba(101,255,186,.18));
+      box-shadow:0 0 100px rgba(89,231,255,.08);
+    }
+    .final-inner{padding:30px;border-radius:34px;background:rgba(7,16,31,.92);border:1px solid rgba(255,255,255,.06)}
+    .final-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
+    .fade{
+      opacity:0;transform:translateY(26px);
+      transition:.7s ease;
+    }
+    .fade.show{opacity:1;transform:translateY(0)}
+    .center-mobile{display:flex;flex-wrap:wrap;gap:12px}
+    @media (max-width: 1100px){
+      h1{font-size:60px}
+      .hero-grid,.grid-2,.reels-grid,.final-grid{grid-template-columns:1fr}
+      .insight-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width: 820px){
+      .nav-inner{flex-direction:column;align-items:flex-start;padding:12px 0}
+      .nav-links{width:100%}
+      .stats,.grid-3,.subgrid,.info-grid,.table-header,.table-row{grid-template-columns:1fr}
+      .insight-grid{grid-template-columns:1fr}
+      .table-header{display:none}
+      .table-row{
+        gap:0;border-radius:24px;margin-bottom:12px;
+        background:rgba(255,255,255,.04)
+      }
+      .table-row div{padding:8px 16px}
+      .table-row div::before{
+        content:attr(data-label);
+        display:block;
+        font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.42);margin-bottom:4px
+      }
+      h1{font-size:44px}
+      .section h2{font-size:38px}
+      .lead,.section .section-lead{font-size:16px}
+    }
+  </style>
+</head>
+<body class="grain">
+  <div class="orb c1"></div>
+  <div class="orb c2"></div>
+  <div class="orb c3"></div>
+
+  <div class="wrap">
+    <nav class="nav">
+      <div class="container nav-inner">
+        <div class="brand">
+          <div class="logo">
+            <img src="https://raw.githubusercontent.com/cernysevegor1-pixel/-1/main/a480e408-03fd-4830-a355-c92f3fe24fb5.jpeg" alt="EasyEng">
+          </div>
+          <div>
+            <div class="brand-kicker">luxury site presentation</div>
+            <div class="brand-title">EASYENG</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a class="chip" href="#about">Концепт</a>
+          <a class="chip" href="#reels">Ролики</a>
+          <a class="chip" href="#media">Медиаплан</a>
+          <a class="chip" href="#faq">FAQ</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero container">
+      <div class="hero-grid">
+        <div class="fade">
+          <div class="eyebrow">✦ сайт-презентация уровня digital-агентства</div>
+          <h1>
+            EasyEng
+            <span class="grad-text">вкусный, дорогой, живой</span>
+          </h1>
+          <p class="lead">
+            Это уже не просто презентация, а интерактивный сайт с анимациями, кнопками, видео-вставками и сильной визуальной подачей. Всё выглядит так, будто это собирало реально дорогое креативное агентство.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="#reels">▶ Смотреть ролики</a>
+            <a class="btn" href="#media">▣ Открыть метрики</a>
+          </div>
+          <div class="stats">
+            <div class="card stat-card">
+              <div class="stat-big">3</div>
+              <div class="stat-small">ролика в воронке</div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-big">30–50%</div>
+              <div class="stat-small">прогноз VTR</div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-big">3–8%</div>
+              <div class="stat-small">конверсия в заявку</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase fade">
+          <div class="showcase-inner">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px">
+              <div>
+                <div class="mini-label">hero preview</div>
+                <div style="font-size:20px;font-weight:900;margin-top:6px">Из ступора — в уверенность</div>
+              </div>
+              <a class="chip" href="#reels">▷ Play</a>
+            </div>
+            <div class="mini-stack">
+              <div class="mini-alert">
+                <div class="mini-label">pain</div>
+                <div class="mini-big">Ты всё понимаешь, но не говоришь</div>
+              </div>
+              <div class="mini-good">
+                <div class="mini-label">solution</div>
+                <div class="mini-big" style="font-size:24px">Говорить, а не зубрить — практика с первого урока</div>
+              </div>
+              <div class="mini-grid">
+                <div><span class="mini-label">block</span><strong>Hook</strong></div>
+                <div><span class="mini-label">block</span><strong>JTBD</strong></div>
+                <div><span class="mini-label">block</span><strong>CTA</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="about" class="section container">
+      <div class="fade">
+        <div class="eyebrow">✦ концепт</div>
+        <h2>Не просто ролики — а точное попадание в боль аудитории</h2>
+        <p class="section-lead">
+          Задача кампании — не собрать пустые просмотры, а довести человека от узнавания своей боли до клика, доверия и заявки.
+        </p>
+      </div>
+      <div class="grid-3" style="margin-top:24px">
+        <div class="card content-card fade">
+          <div class="icon-box">◎</div>
+          <h3>Цель кампании</h3>
+          <p>Попасть в конкретную боль аудитории, показать решение и привести к действию через сильный рекламный сторителлинг.</p>
+        </div>
+        <div class="card content-card fade">
+          <div class="icon-box">◉</div>
+          <h3>Кому продаём</h3>
+          <p>Студентам и молодым специалистам 16–30 лет, которые понимают английский, но не могут свободно говорить.</p>
+        </div>
+        <div class="card content-card fade">
+          <div class="icon-box">↗</div>
+          <h3>Что продаём</h3>
+          <p>Не просто курс, а ощущение прогресса, уверенности и живого английского без скучной теории.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="audience" class="section container">
+      <div class="fade">
+        <div class="eyebrow">✦ аудитория</div>
+        <h2>Боль, которую невозможно не узнать</h2>
+        <p class="section-lead">
+          Мы говорим с людьми, которые устали от зубрёжки, обещаний и ощущения, что английский им не даётся. Им нужен другой подход — живой, быстрый и понятный.
+        </p>
+      </div>
+      <div class="grid-2" style="margin-top:24px">
+        <div class="card content-card fade">
+          <div class="subgrid">
+            <div class="mini-card">
+              <div class="title">Кто они</div>
+              <p>Студенты, начинающие специалисты, люди, которым английский нужен для жизни, работы и уверенности.</p>
+            </div>
+            <div class="mini-card">
+              <div class="title">Мотивация</div>
+              <p>Быстрый реальный прогресс, разговорная практика и чувство «я тоже могу».</p>
+            </div>
+            <div class="mini-card">
+              <div class="title">Барьеры</div>
+              <p>Скучный школьный опыт, недоверие к курсам, страх потратить деньги впустую.</p>
+            </div>
+            <div class="mini-card">
+              <div class="title">Ожидание</div>
+              <p>Понятный формат, живые диалоги, первый результат без перегруза.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pain-list fade">
+          <div class="pain-item"><div class="pain-icon"></div><div>Учу английский годами, но в нужный момент молчу</div></div>
+          <div class="pain-item"><div class="pain-icon"></div><div>Понимаю, но не могу ответить</div></div>
+          <div class="pain-item"><div class="pain-icon"></div><div>Боюсь ошибиться и выглядеть глупо</div></div>
+          <div class="pain-item"><div class="pain-icon"></div><div>Не хочу снова скучную теорию</div></div>
+          <div class="pain-item"><div class="pain-icon"></div><div>Хочу быстро начать говорить, а не зубрить</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reels" class="section container">
+      <div class="fade">
+        <div class="eyebrow">✦ ролики</div>
+        <h2>Видео-витрина: кликай, переключай, смотри</h2>
+        <p class="section-lead">
+          Я собрал блок так, чтобы он ощущался как дорогой showcase: слева выбор роликов, справа живой плеер и карточки с сильным маркетинговым смыслом.
+        </p>
+      </div>
+
+      <div class="reels-grid" style="margin-top:24px">
+        <div class="reel-list fade" id="reelButtons"></div>
+
+        <div class="video-shell fade">
+          <div class="video-inner">
+            <div class="video-top">
+              <div>
+                <div class="pill">video preview</div>
+                <h3 id="reelTitle">Ролик</h3>
+              </div>
+              <div class="pill" id="reelStat">VTR</div>
+            </div>
+
+            <div class="video-wrap" id="videoArea"></div>
+
+            <div class="info-grid">
+              <div class="info-box">
+                <strong>Hook</strong>
+                <span id="reelHook"></span>
+              </div>
+              <div class="info-box">
+                <strong>Боль</strong>
+                <span id="reelPain"></span>
+              </div>
+              <div class="info-box">
+                <strong>Решение</strong>
+                <span id="reelSolution"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="insights" class="section container">
+      <div class="fade">
+        <div class="eyebrow">✦ инсайты</div>
+        <h2>Контент, который не просто смотрят — по нему кликают</h2>
+        <p class="section-lead">
+          В коротком рекламном видео всё решают первые секунды: человек должен мгновенно узнать свою боль, почувствовать напряжение и сразу увидеть выход.
+        </p>
+      </div>
+      <div class="insight-grid" style="margin-top:24px">
+        <div class="card content-card fade">
+          <div class="icon-box">⚡</div>
+          <h3>Резкий хук</h3>
+          <p>Первые секунды должны сразу назвать боль и зацепить без разгона.</p>
+        </div>
+        <div class="card content-card fade">
+          <div class="icon-box">◐</div>
+          <h3>Контраст боли и решения</h3>
+          <p>Визуальный переход из стресса в ясность делает ролик сильнее.</p>
+        </div>
+        <div class="card content-card fade">
+          <div class="icon-box">▣</div>
+          <h3>Быстрый результат</h3>
+          <p>Обещание первых изменений снижает скепсис и сопротивление.</p>
+        </div>
+        <div class="card content-card fade">
+          <div class="icon-box">➜</div>
+          <h3>Понятный CTA</h3>
+          <p>Бесплатный первый шаг делает клики логичными и естественными.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="media" class="section container">
+      <div class="fade">
+        <div class="eyebrow">✦ медиаплан</div>
+        <h2>Каналы, метрики, CTA — всё в одном дорогом блоке</h2>
+        <p class="section-lead">
+          Сделано так, чтобы на защите это выглядело не как скучная таблица, а как уверенная performance-подача с цифрами, логикой и сильными призывами к действию.
+        </p>
+      </div>
+
+      <div class="grid-2" style="margin-top:24px">
+        <div class="card table-card fade">
+          <div class="table-header">
+            <div>Ролик</div>
+            <div>JTBD</div>
+            <div>Канал</div>
+            <div>Метрики</div>
+            <div>CTA</div>
+          </div>
+
+          <div class="table-row">
+            <div data-label="Ролик">1. «10 лет учил»</div>
+            <div data-label="JTBD">Не теряться в реальной ситуации</div>
+            <div data-label="Канал">TikTok / Reels / Shorts</div>
+            <div data-label="Метрики">VTR 30–40%, CTR 1.5–2.5%, CVR 3–5%</div>
+            <div data-label="CTA">Начни говорить с первого урока</div>
+          </div>
+          <div class="table-row">
+            <div data-label="Ролик">2. «Ты единственный»</div>
+            <div data-label="JTBD">Не чувствовать себя отстающим</div>
+            <div data-label="Канал">TikTok / Instagram Reels / таргет</div>
+            <div data-label="Метрики">VTR 35–45%, CTR 2–3%, CVR 4–6%</div>
+            <div data-label="CTA">EasyEng за 10 дней меняет всё</div>
+          </div>
+          <div class="table-row">
+            <div data-label="Ролик">3. «До / После»</div>
+            <div data-label="JTBD">Быстро увидеть результат</div>
+            <div data-label="Канал">Landing / Stories Ads / Retargeting</div>
+            <div data-label="Метрики">VTR 40–50%, CTR 2.5–3.5%, CVR 5–8%</div>
+            <div data-label="CTA">Увидь разницу уже на первом уроке</div>
+          </div>
+        </div>
+
+        <div class="metric-list fade">
+          <div class="card metric-card">
+            <div class="metric-top"><span>Вовлечение</span><strong>84%</strong></div>
+            <div class="bar"><div data-width="84" style="background:linear-gradient(90deg, #59e7ff, #4da3ff)"></div></div>
+          </div>
+          <div class="card metric-card">
+            <div class="metric-top"><span>Досмотр</span><strong>76%</strong></div>
+            <div class="bar"><div data-width="76" style="background:linear-gradient(90deg, #65ffba, #23c9a5)"></div></div>
+          </div>
+          <div class="card metric-card">
+            <div class="metric-top"><span>CTR</span><strong>58%</strong></div>
+            <div class="bar"><div data-width="58" style="background:linear-gradient(90deg, #b78cff, #ff79e3)"></div></div>
+          </div>
+          <div class="card metric-card">
+            <div class="metric-top"><span>Конверсия</span><strong>42%</strong></div>
+            <div class="bar"><div data-width="42" style="background:linear-gradient(90deg, #ff7d9d, #ffa95f)"></div></div>
+          </div>
+          <div class="accent-box">
+            <div class="pill">усиление CTA</div>
+            <p>
+              Субтитры, звук, быстрый монтаж, контраст боли и решения, крупный оффер и бесплатный первый шаг — всё это усиливает удержание и подталкивает к клику.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="section container">
+      <div class="fade">
+        <div class="eyebrow">✦ итоги</div>
+        <h2>Что уже докручено и куда можно усиляться дальше</h2>
+        <p class="section-lead">
+          Финальный блок завершает историю как уверенная защита проекта: видно, что было улучшено, какие проблемы сняты и что можно масштабировать дальше.
+        </p>
+      </div>
+      <div class="grid-3" style="margin-top:24px">
+        <div class="card content-card fade">
+          <div class="icon-box">✓</div>
+          <h3>Уже усилили</h3>
+          <p>Ролики стали точнее по боли, оффер стал понятнее, CTA стал сильнее, а подача стала современнее.</p>
+        </div>
+        <div class="card content-card fade">
+          <div class="icon-box">✦</div>
+          <h3>Проблемы, которые закрыли</h3>
+          <p>Убрали ощущение скучного курса, быстрее показали решение, сделали продукт ближе к ЦА и усилили узнаваемость боли.</p>
+        </div>
+        <div class="card content-card fade">
+          <div class="icon-box">↗</div>
+          <h3>Что делать дальше</h3>
+          <p>A/B тест разных хуков, тест нескольких CTA, адаптация под сегменты и ретаргетинг на досмотревших.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section container">
+      <div class="fade">
+        <div class="eyebrow">✦ faq</div>
+        <h2>Готовые ответы для защиты</h2>
+        <p class="section-lead">
+          Этот блок можно использовать как шпаргалку прямо во время показа: нажимаешь карточку и открывается короткий уверенный ответ.
+        </p>
+      </div>
+
+      <div class="faq-list" style="margin-top:24px">
+        <details class="faq fade">
+          <summary>Почему выбрана именно эта JTBD-задача?</summary>
+          <p>Потому что она максимально близка к живой боли аудитории и мгновенно вызывает узнавание себя в ситуации.</p>
+        </details>
+        <details class="faq fade">
+          <summary>Почему упор на вертикальные видео?</summary>
+          <p>Потому что короткие ролики быстрее цепляют холодную аудиторию, быстро доносят боль, решение и CTA.</p>
+        </details>
+        <details class="faq fade">
+          <summary>Почему эти метрики выглядят реалистично?</summary>
+          <p>Они опираются на логику performance-воронки: сильный хук повышает досмотр, ясная боль усиливает CTR, а бесплатный первый шаг поднимает конверсию.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="container" style="padding:0 22px 100px">
+      <div class="final fade">
+        <div class="final-inner">
+          <div class="final-grid">
+            <div>
+              <div class="eyebrow">✦ final block</div>
+              <h2 style="font-size:46px;margin-top:18px">HTML для Блокнота уже готов</h2>
+              <p class="section-lead">
+                Я уже встроил логотип и два твоих ролика. Когда появится ссылка на второй ролик, ты просто заменишь её в одном месте в коде — и всё.
+              </p>
+            </div>
+            <div class="center-mobile" style="justify-content:flex-end">
+              <a class="btn primary" href="#reels">Открыть ролики</a>
+              <a class="btn" href="#media">Смотреть метрики</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const reels = [
+      {
+        id: 1,
+        name: 'Ролик 1 — "10 лет учил, но молчишь"',
+        short: 'Боль в реальной ситуации',
+        stat: 'VTR 30–40%',
+        hook: 'Ты учил английский 10 лет, но до сих пор молчишь',
+        pain: 'Ступор, стресс, неловкость в реальной ситуации.',
+        solution: 'EasyEng учит говорить через практику, а не через зубрёжку.',
+        video: 'https://raw.githubusercontent.com/cernysevegor1-pixel/e123/main/Timeline%201%20(1).mov'
+      },
+      {
+        id: 2,
+        name: 'Ролик 2 — "Ты единственный не понимаешь?"',
+        short: 'Социальная тревога и отставание',
+        stat: 'CTR 2–3%',
+        hook: 'Ощущение, что все вокруг уже говорят, а ты — нет',
+        pain: 'Изоляция, тревога, социальный дискомфорт.',
+        solution: 'Понятный путь, быстрый прогресс и первые результаты без перегруза.',
+        video: 'https://raw.githubusercontent.com/cernysevegor1-pixel/e123/main/Timeline%201.mov'
+      },
+      {
+        id: 3,
+        name: 'Ролик 3 — "До / После"',
+        short: 'Результат, который видно сразу',
+        stat: 'CVR 5–8%',
+        hook: 'Покажи результат так, чтобы его невозможно было не заметить',
+        pain: 'Недоверие, страх потратить время и деньги зря.',
+        solution: 'Формат до/после, прогресс-бар и реальные жизненные сцены.',
+        video: 'https://raw.githubusercontent.com/cernysevegor1-pixel/e123/main/Timeline%201%20(2).mov'
+      }
+    ];
+
+    const reelButtons = document.getElementById('reelButtons');
+    const reelTitle = document.getElementById('reelTitle');
+    const reelStat = document.getElementById('reelStat');
+    const reelHook = document.getElementById('reelHook');
+    const reelPain = document.getElementById('reelPain');
+    const reelSolution = document.getElementById('reelSolution');
+    const videoArea = document.getElementById('videoArea');
+
+    let activeId = 1;
+
+    function renderButtons(){
+      reelButtons.innerHTML = '';
+      reels.forEach(reel => {
+        const btn = document.createElement('button');
+        btn.className = 'reel-btn' + (reel.id === activeId ? ' active' : '');
+        btn.innerHTML = `
+          <div class="reel-name">${reel.name}</div>
+          <div class="reel-short">${reel.short}</div>
+          <div class="reel-stat">${reel.stat}</div>
+        `;
+        btn.addEventListener('click', () => {
+          activeId = reel.id;
+          renderButtons();
+          renderActive();
+        });
+        reelButtons.appendChild(btn);
+      });
+    }
+
+    function renderActive(){
+      const reel = reels.find(r => r.id === activeId);
+      reelTitle.textContent = reel.name;
+      reelStat.textContent = reel.stat;
+      reelHook.textContent = reel.hook;
+      reelPain.textContent = reel.pain;
+      reelSolution.textContent = reel.solution;
+
+      if(reel.video){
+        videoArea.innerHTML = `<video controls playsinline src="${reel.video}"></video>`;
+      } else {
+        videoArea.innerHTML = `
+          <div class="placeholder">
+            <div>
+              <div style="font-size:42px;opacity:.45">🎬</div>
+              <div style="margin-top:12px;font-size:22px;font-weight:900;color:#fff">Добавь второе видео</div>
+              <div style="margin-top:10px;max-width:420px;line-height:1.8">
+                Когда получишь ссылку на второй ролик, вставь её в код в блок <b>video: ''</b> — и он сразу появится.
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    renderButtons();
+    renderActive();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: .14 });
+
+    document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const bar = entry.target;
+          bar.style.width = bar.dataset.width + '%';
+        }
+      });
+    }, { threshold: .4 });
+
+    document.querySelectorAll('.bar > div').forEach(el => barObserver.observe(el));
+  </script>
+</body>
+</html>
